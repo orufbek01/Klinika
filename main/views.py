@@ -6,8 +6,43 @@ from .models import *
 from .serializers import *
 
 
-class Employee_all(ListAPIView):
+class Get_Employee(ListAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+
+
+class Get_Room(ListAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+
+
+class Get_Address(ListAPIView):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+
+class Get_Cashflow(ListAPIView):
+    queryset = Cashflow.objects.all()
+    serializer_class = CashflowSerializer
+
+
+class Get_Patient(ListAPIView):
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+
+
+class Get_Patients_about(ListAPIView):
+    queryset = Patients_about.objects.all()
+    serializer_class = Patients_aboutSerializer
+
+
+class Get_Department(ListAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+
+
+class Get_Operation(ListAPIView):
+    queryset = Operation.objects.all()
+    serializer_class = OperationSerializer
 
 
