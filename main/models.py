@@ -207,4 +207,10 @@ class Operation(models.Model):
     name = models.CharField(max_length=55)
     doctor = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
     patient = models.ForeignKey(to='Patient', on_delete=models.CASCADE)
+    equipment = models.ForeignKey(to='Equipment', on_delete=models.CASCADE)
 
+
+class Equipment(models.Model):
+    name = models.CharField(max_length=55)
+    type = models.CharField(max_length=55)
+    number = models.IntegerField(default=0)
