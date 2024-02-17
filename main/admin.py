@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext, gettext_lazy as _
 from .models import *
 
-@admin.register(models.User)
+@admin.register(User)
 class EmployeeAdmin(UserAdmin):
     list_display = ['id','username', 'first_name', 'last_name', 'is_active']
     fieldsets = (
@@ -22,6 +22,7 @@ admin.site.register(Address)
 admin.site.register(Cashflow)
 admin.site.register(Room)
 admin.site.register(Patient)
-admin.site.register(Patients_about)
+admin.site.register(Testimonal_patient)
+admin.site.register(Cassa)
 admin.site.register(Department)
 admin.site.register(Operation)

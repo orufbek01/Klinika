@@ -39,14 +39,14 @@ class CashflowSerializer(serializers.ModelSerializer):
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         depth = 1
-        model = Cashflow
+        model = Patient
         fields = "__all__"
 
 
-class Patients_aboutSerializer(serializers.ModelSerializer):
+class Testimonal_patientSerializer(serializers.ModelSerializer):
     class Meta:
         depth = 1
-        model = Patients_about
+        model = Testimonal_patient
         fields = "__all__"
 
 
@@ -61,6 +61,13 @@ class OperationSerializer(serializers.ModelSerializer):
     class Meta:
         depth = 1
         model = Operation
+        fields = "__all__"
+
+
+class CassaSerializer(serializers.ModelSerializer):
+    class Meta:
+        depth = 1
+        model = Cassa
         fields = "__all__"
 
 

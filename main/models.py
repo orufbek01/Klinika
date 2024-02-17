@@ -3,14 +3,16 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.template.defaultfilters import slugify
 import qrcode
+from io import BytesIO
+from django.core.files import File
 
 
 class User(AbstractUser):
-    avatar = models.ImageField(upload_to='foto/')
+    avatar = models.ImageField(upload_to='foto/', verbose_name='Rasm')
     passport_seria = models.CharField(max_length=55, verbose_name='Passport seriasi')
-    age = models.IntegerField()
-    address = models.ForeignKey(to='Address', on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=13,null=True,blank=True,validators=[
+    age = models.IntegerField(verbose_name='Yosh')
+    address = models.ForeignKey(to='Address', on_delete=models.CASCADE, verbose_name='Yashash joyi')
+    phone_number = models.CharField(max_length=13,null=True,blank=True, verbose_name='Telefon raqam' ,validators=[
         RegexValidator(
             regex='^[\+]9{2}8{1}[0-9]{9}$',
             message = 'Invalide phone number',
@@ -21,7 +23,7 @@ class User(AbstractUser):
         ('Male', 'Male'),
         ('Famale', 'Famale')
     )
-    gender = models.CharField(max_length=55, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=55,verbose_name='Jins', choices=GENDER_CHOICES)
     slugify = models.SlugField()
 
     class Meta(AbstractUser.Meta):
@@ -105,7 +107,7 @@ class Cashflow(models.Model):
     )
     payment_type = models.CharField(max_length=55, choices=PATMENT_TYPE)
     timestamp = models.DateTimeField(auto_now=True)
-    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+    # qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
     slugify = models.SlugField()
 
     def save(self, *args, **kwargs):
@@ -143,14 +145,23 @@ class Room(models.Model):
 
 
 class Patient(models.Model):
-    first_name = models.CharField(max_length=55)
-    last_name = models.CharField(max_length=55)
+    full_name = models.CharField(max_length=55)
     doctor = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
     room = models.ForeignKey(to='Room', on_delete=models.CASCADE)
     suggestions = models.CharField(max_length=55)
-    comments = models.CharField(max_length=55)
-    complaints = models.CharField(max_length=55)
-    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+    age = models.IntegerField(default=0)
+    phone_number = models.CharField(max_length=13, null=True, blank=True, validators=[
+        RegexValidator(
+            regex='^[\+]9{2}8{1}[0-9]{9}$',
+            message='Invalide phone number',
+            code='Invalid number'
+        )
+    ])
+    email = models.EmailField()
+    room = models.ForeignKey(to='Room', on_delete=models.CASCADE)
+    turi = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
+    adress = models.ForeignKey(to=Address, on_delete=models.CASCADE)
+    # qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
     slugify = models.SlugField()
 
     def save(self, *args, **kwargs):
@@ -171,26 +182,6 @@ class Patient(models.Model):
     img.save(buffer)
     buffer.seek(0)
     self.qr_code.save(f'qr_code_{self.id}.png', File(buffer), save=False)
-
-    def __str__(self):
-        return self.first_name
-
-
-class Patients_about(models.Model):
-    name = models.CharField(max_length=55)
-    sur_name = models.CharField(max_length=55)
-    age = models.IntegerField(default=0)
-    phone_number = models.CharField(max_length=13, null=True, blank=True, validators=[
-        RegexValidator(
-            regex='^[\+]9{2}8{1}[0-9]{9}$',
-            message='Invalide phone number',
-            code='Invalid number'
-        )
-    ])
-    email = models.EmailField()
-    room = models.ForeignKey(to='Room', on_delete=models.CASCADE)
-    turi = models.ForeignKey(to='Employee', on_delete=models.CASCADE0)
-    adress = models.ForeignKey(to=Address, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -214,3 +205,23 @@ class Equipment(models.Model):
     name = models.CharField(max_length=55)
     type = models.CharField(max_length=55)
     number = models.IntegerField(default=0)
+    room = models.ManyToManyField(to='Room')
+
+    def __str__(self):
+        return self.name
+
+
+class Cassa(models.Model):
+    total_amout = models.DecimalField(max_digits=55, decimal_places=2)
+
+    def __str__(self):
+        return self.total_amout
+
+
+class Testimonal_patient(models.Model):
+    patient = models.ForeignKey(to='Patient', on_delete=models.CASCADE)
+    comments = models.CharField(max_length=55)
+    complaints = models.CharField(max_length=55)
+
+    def __str__(self):
+        return self.patient

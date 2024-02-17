@@ -31,9 +31,9 @@ class Get_Patient(ListAPIView):
     serializer_class = PatientSerializer
 
 
-class Get_Patients_about(ListAPIView):
-    queryset = Patients_about.objects.all()
-    serializer_class = Patients_aboutSerializer
+class Get_Testimonal_patient(ListAPIView):
+    queryset = Testimonal_patient.objects.all()
+    serializer_class = Testimonal_patientSerializer
 
 
 class Get_Department(ListAPIView):
@@ -46,3 +46,6 @@ class Get_Operation(ListAPIView):
     serializer_class = OperationSerializer
 
 
+class Get_Cassa(ListAPIView):
+    queryset = Cassa.objects.all()
+    serializer_class = CassaSerializer
