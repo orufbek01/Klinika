@@ -40,8 +40,7 @@ class User(AbstractUser):
 
 
 class Employee(models.Model):
-    first_name = models.CharField(max_length=55)
-    last_name = models.CharField(max_length=55)
+    full_name = models.CharField(max_length=155)
     age = models.IntegerField(default=19)
     specialty = models.CharField(max_length=55)
     phone_number = models.CharField(max_length=13, null=True, blank=True, validators=[
@@ -225,3 +224,19 @@ class Testimonal_patient(models.Model):
 
     def __str__(self):
         return self.patient
+
+class Attendance(models.Model):
+    employee = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
+    date = models.DateField()
+    chek_in = models.TimeField(null=True, blank=True)
+    chek_out = models.TimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ['employee', 'date']
+
+    def clean(self):
+        if self.chek_out and self.chek_out < self.chek_in:
+            raise ValidationError('Check-out time must be after chek-in time.')
+
+    def __str__(self):
+        return f'{self.employee.full_name} - {self.date}'

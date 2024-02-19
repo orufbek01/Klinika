@@ -46,6 +46,6 @@ class Get_Operation(ListAPIView):
     serializer_class = OperationSerializer
 
 
-class Get_Cassa(ListAPIView):
-    queryset = Cassa.objects.all()
-    serializer_class = CassaSerializer
+class Get_Attendance(ListAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
