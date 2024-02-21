@@ -64,6 +64,12 @@ class OperationSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class EquipmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        depht = 1
+        model = Equipment
+        fields = "__all__"
+
 class CassaSerializer(serializers.ModelSerializer):
     class Meta:
         depth = 1

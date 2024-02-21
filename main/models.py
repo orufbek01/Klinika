@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.template.defaultfilters import slugify
+import re
 import qrcode
 from io import BytesIO
 from django.core.files import File
@@ -74,13 +75,13 @@ class Employee(models.Model):
         box_size=8,
         border=4,
     )
-    qr.add_data(f"Your data to encode in the QR code: {self.Employee.specialty}")
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
-    buffer = BytesIO()
-    img.save(buffer)
-    buffer.seek(0)
-    self.qr_code.save(f'qr_code_{self.id}.png', File(buffer), save=False)
+    # qr.add_data(f"Your data to encode in the QR code: {self.Employee.specialty}")
+    # qr.make(fit=True)
+    # img = qr.make_image(fill_color="black", back_color="white")
+    # buffer = BytesIO()
+    # img.save(buffer)
+    # buffer.seek(0)
+    # self.qr_code.save(f'qr_code_{self.id}.png', File(buffer), save=False)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.first_name, self.phone_number)
@@ -121,13 +122,13 @@ class Cashflow(models.Model):
         box_size=8,
         border=4,
     )
-    qr.add_data(f"Your data to encode in the QR code: {self.Cashflow.user}")
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
-    buffer = BytesIO()
-    img.save(buffer)
-    buffer.seek(0)
-    self.qr_code.save(f'qr_code_{self.id}.png', File(buffer), save=False)
+    # qr.add_data(f"Your data to encode in the QR code: {self.Cashflow.user}")
+    # qr.make(fit=True)
+    # img = qr.make_image(fill_color="black", back_color="white")
+    # buffer = BytesIO()
+    # img.save(buffer)
+    # buffer.seek(0)
+    # self.qr_code.save(f'qr_code_{self.id}.png', File(buffer), save=False)
 
     def __str__(self):
         return self.user
@@ -135,7 +136,7 @@ class Cashflow(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=55)
-    deparment = models.ForeignKey(to='Deparment', on_delete=models.CASCADE)
+    deparment = models.ForeignKey(to='Department', on_delete=models.CASCADE)
     number = models.IntegerField(default=0)
     place = models.IntegerField(default=0)
     busy_empty = models.FloatField()
@@ -159,7 +160,6 @@ class Patient(models.Model):
     ])
     email = models.EmailField()
     room = models.ForeignKey(to='Room', on_delete=models.CASCADE)
-    turi = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
     adress = models.ForeignKey(to=Address, on_delete=models.CASCADE)
     # qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
     slugify = models.SlugField()
@@ -175,13 +175,13 @@ class Patient(models.Model):
         box_size=8,
         border=4,
     )
-    qr.add_data(f"Your data to encode in the QR code: {self.Patient.room}")
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
-    buffer = BytesIO()
-    img.save(buffer)
-    buffer.seek(0)
-    self.qr_code.save(f'qr_code_{self.id}.png', File(buffer), save=False)
+    # qr.add_data(f"Your data to encode in the QR code: {self.Patient.room}")
+    # qr.make(fit=True)
+    # img = qr.make_image(fill_color="black", back_color="white")
+    # buffer = BytesIO()
+    # img.save(buffer)
+    # buffer.seek(0)
+    # self.qr_code.save(f'qr_code_{self.id}.png', File(buffer), save=False)
 
     def __str__(self):
         return self.name
