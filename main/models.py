@@ -106,7 +106,7 @@ class Cashflow(models.Model):
     )
     payment_type = models.CharField(max_length=55, choices=PATMENT_TYPE)
     timestamp = models.DateTimeField(auto_now=True)
-    # qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
     slugify = models.SlugField()
 
     def save(self, *args, **kwargs):
@@ -160,7 +160,7 @@ class Patient(models.Model):
     room = models.ForeignKey(to='Room', on_delete=models.CASCADE)
     turi = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
     adress = models.ForeignKey(to=Address, on_delete=models.CASCADE)
-    # qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
     slugify = models.SlugField()
 
     def save(self, *args, **kwargs):
