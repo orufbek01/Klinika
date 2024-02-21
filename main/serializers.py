@@ -76,4 +76,10 @@ class CassaSerializer(serializers.ModelSerializer):
         model = Cassa
         fields = "__all__"
 
+class AttendanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        depth = 1
+        model = Attendance
+        fields = "__all__"
+
 

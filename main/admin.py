@@ -18,6 +18,7 @@ class EmployeeAdmin(UserAdmin):
 
 
 admin.site.register(Employee)
+admin.site.register(Attendance)
 admin.site.register(Address)
 admin.site.register(Cashflow)
 admin.site.register(Room)
