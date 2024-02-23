@@ -105,6 +105,7 @@ class Address(models.Model):
 
 class Cashflow(models.Model):
     patient = models.ForeignKey(to='Patient', on_delete=models.CASCADE)
+    user = models.ForeignKey(to='User', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     description = models.CharField(max_length=255)
     PATMENT_TYPE = (
@@ -164,6 +165,7 @@ class Room(models.Model):
 class Patient(models.Model):
     full_name = models.CharField(max_length=55)
     doctor = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
+    room = models.ForeignKey(to='Room', on_delete=models.CASCADE)
     suggestions = models.CharField(max_length=55)
     age = models.IntegerField(default=0)
     phone_number = models.CharField(max_length=13, null=True, blank=True, validators=[
@@ -185,6 +187,7 @@ class Patient(models.Model):
 
     def save(self, *args, **kwargs):
         qr = qrcode.QRCode(
+
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
             box_size=8,
@@ -198,8 +201,16 @@ class Patient(models.Model):
         buffer.seek(0)
         self.qr_code.save(f'qr_code_{self.id}.png', File(buffer), save=False)
 
+
     def __str__(self):
-        return self.name
+        return self.full_name
+
+
+class Department(models.Model):
+    number = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.number
 
 
 class Operation(models.Model):
@@ -207,6 +218,16 @@ class Operation(models.Model):
     doctor = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
     patient = models.ForeignKey(to='Patient', on_delete=models.CASCADE)
     equipment = models.ForeignKey(to='Equipment', on_delete=models.CASCADE)
+
+
+class Equipment(models.Model):
+    name = models.CharField(max_length=55)
+    type = models.CharField(max_length=55)
+    number = models.IntegerField(default=0)
+    room = models.ManyToManyField(to='Room')
+
+    def __str__(self):
+        return self.name
 
 
 class Cassa(models.Model):
@@ -239,3 +260,5 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f'{sel6f.employee.full_name} - {self.date}'
+
+        return f'{self.employee.full_name} - {self.date}'

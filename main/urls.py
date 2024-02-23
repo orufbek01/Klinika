@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import Get_Cassa, Get_Attendance, Get_Patient, Get_Address, Get_Employee, Get_Cashflow,Get_Operation, Get_Testimonal_patient,Get_Department,Get_Room
+from .views import *
 
 urlpatterns = [
     path('get_employee/', Get_Employee.as_view()),

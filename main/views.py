@@ -230,4 +230,3 @@ def testimonal_patient_by_payment_type(request):
     ser = Testimonal_patientSerializer(testimonal_patient, many=True)
     return Response(ser.data)
 
-
