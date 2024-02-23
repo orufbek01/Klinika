@@ -46,6 +46,7 @@ class User(AbstractUser):
 
 
 class Employee(models.Model):
+    user = models.ForeignKey(to='User', on_delete=models.CASCADE)
     full_name = models.CharField(max_length=155)
     age = models.IntegerField(default=19)
     specialty = models.CharField(max_length=55)
@@ -103,7 +104,7 @@ class Address(models.Model):
 
 
 class Cashflow(models.Model):
-    user = models.ForeignKey(to='User', on_delete=models.CASCADE)
+    patient = models.ForeignKey(to='Patient', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     description = models.CharField(max_length=255)
     PATMENT_TYPE = (
@@ -138,11 +139,22 @@ class Cashflow(models.Model):
         return self.user
 
 
+class Equipment(models.Model):
+    name = models.CharField(max_length=55)
+    type = models.CharField(max_length=55)
+    number = models.IntegerField(default=0)
+    room = models.ManyToManyField(to='Room')
+
+    def __str__(self):
+        return self.name
+
+
 class Room(models.Model):
     name = models.CharField(max_length=55)
     deparment = models.ForeignKey(to='Department', on_delete=models.CASCADE)
     number = models.IntegerField(default=0)
     place = models.IntegerField(default=0)
+    equipment = models.ManyToManyField(to='Equipment')
     busy_empty = models.FloatField()
 
     def __str__(self):
@@ -195,16 +207,6 @@ class Operation(models.Model):
     doctor = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
     patient = models.ForeignKey(to='Patient', on_delete=models.CASCADE)
     equipment = models.ForeignKey(to='Equipment', on_delete=models.CASCADE)
-
-
-class Equipment(models.Model):
-    name = models.CharField(max_length=55)
-    type = models.CharField(max_length=55)
-    number = models.IntegerField(default=0)
-    room = models.ManyToManyField(to='Room')
-
-    def __str__(self):
-        return self.name
 
 
 class Cassa(models.Model):
