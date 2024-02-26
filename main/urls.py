@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import Get_Cassa, Get_Attendance, Get_Patient, Get_Address, Get_Employee, Get_Cashflow,Get_Operation, Get_Testimonal_patient,Get_Department,Get_Room
-from .views import *
+from . import views
 
 urlpatterns = [
     path('get_employee/<slug:slug>/', Get_Employee.as_view()),
@@ -12,4 +12,37 @@ urlpatterns = [
     path('get_operation/<slug:slug>/', Get_Operation.as_view()),
     path('get_deparment/<slug:slug>/', Get_Department.as_view()),
     path('get_cassa/<slug:slug>/', Get_Cassa.as_view()),
+    path('employee/by-full-name/', views.employee_by_full_name),
+    path('employee/by-specialty/', views.employee_by_specialty),
+    path('employee/by-phone-number/', views.employee_by_phone_number),
+    path('employee/by-address/', views.employee_by_address),
+    path('employee/by-room/', views.employee_by_room),
+    path('employee/by-salary/', views.employee_by_salary),
+    path('employee/by-started-work/', views.employee_by_started_work),
+    path('employee/by-age/', views.employee_by_age),
+    path('employee/by-extra-phone-number/', views.employee_by_extra_phone_number),
+    path('patient/by-full-name/', views.patient_by_full_name),
+    path('patient/by-age/', views.patient_by_age),
+    path('patient/by-room/', views.patient_by_room),
+    path('patient/by-phone-number/', views.patient_by_phone_number),
+    path('patient/by-doctor/', views.patient_by_doctor),
+    path('room/by-name/', views.room_by_name),
+    path('room/by-department/', views.room_by_deparment),
+    path('room/by-number/', views.room_by_number),
+    path('room/by-equipment/', views.room_by_equipment),
+    path('cashflow/by-patient/', views.cashflow_by_patient),
+    path('cashflow/by-timestamp/', views.cashflow_by_timestamp),
+    path('cashflow/by-payment-type/', views.cashflow_by_payment_type),
+    path('testimonal-patient/by-payment-type/', views.testimonal_patient_by_payment_type),
+    path('equipment/by-name/', views.equipment_filter_by_name),
+    path('department/by-name/', views.department_filter_by_name),
+    path('attendance/by-employee/', views.attendance_filter_by_employee),
+    path('attendance/by-date/', views.attendance_filter_by_date),
+    path('cashflow/by-timestamp/', views.cashflow_filter_by_timestap),
+    path('cashflow/by-amount/', views.cashflow_filter_by_amount),
+    path('operation/by-doctor/', views.filter_operation_by_doctor),
+    path('operation/by-date-time/', views.filter_operation_by_date_time),
+    path('operation/by-time/', views.filter_operation_by_time),
+    path('operation/by-patient/', views.filter_operation_by_patient),
+    path('operation/by-room/', views.filter_operation_by_room),
 ]
