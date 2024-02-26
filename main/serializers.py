@@ -64,15 +64,14 @@ class OperationSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-<<<<<<< HEAD
-=======
+
 class EquipmentSerializer(serializers.ModelSerializer):
     class Meta:
         depht = 1
         model = Equipment
         fields = "__all__"
 
->>>>>>> 2ec677803d99f6122a2cdc3885d6a7cd53f9e30f
+
 class CassaSerializer(serializers.ModelSerializer):
     class Meta:
         depth = 1

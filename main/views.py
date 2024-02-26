@@ -230,3 +230,93 @@ def testimonal_patient_by_payment_type(request):
     ser = Testimonal_patientSerializer(testimonal_patient, many=True)
     return Response(ser.data)
 
+@api_view(["GET"])
+def equipment_filter_by_name(request):
+    name = request.GET.get('name')
+    equipment = Equipment.objects.filter(name__icontains=name)
+    ser = EquipmentSerializer(equipment, many=True)
+    return Response(ser.data)
+
+
+@api_view(["GET"])
+def department_filter_by_name(request):
+    name = request.GET.get('name')
+    department = Department.objects.filter(name__icontains=name)
+    ser = DepartmentSerializer(department, many=True)
+    return Response(ser.data)
+
+
+@api_view(["GET"])
+def attendance_filter_by_employee(request):
+    employee = request.GET.get('employee')
+    attendance = Attendance.objects.filter(employee=employee)
+    ser = EmployeeSerializer(attendance, many=True)
+    return Response(ser.data)
+
+
+@api_view(["GET"])
+def attendance_filter_by_date(request):
+    date = request.GET.get('date')
+    attendance = Attendance.objects.filter(date=date)
+    ser = AttendanceSerializer(attendance, many=True)
+    return Response(ser.data)
+
+
+@api_view(["GET"])
+def cashflow_filter_by_timestap(request):
+    timestap = request.GET.get('timestap')
+    cashflow = Cashflow.objects.filter(timestap=timestap)
+    ser = CashflowSerializer(cashflow, many=True)
+    return Response(ser.data)
+
+
+@api_view(["GET"])
+def cashflow_filter_by_amount(request):
+    amount = request.GET.get('amount')
+    amount = float(amount_str.replace(',','.'))
+    cashflow = Cashflow.objects.filter(amount=amount)
+    ser = CashflowSerializer(cashflow, many=True)
+    return Response(ser.data)
+
+
+@api_view(['GET'])
+def filter_operation_by_doctor(request):
+    doctor = request.GET.get('doctor')
+    operation = Operation.objects.filter(doctor=doctor)
+    ser = OperationSerializers(operation, many=True)
+    return Response(ser.data)
+
+@api_view(['GET'])
+def filter_operation_by_date_time(reuqest):
+    date_time = reuqest.GET.get('date_time')
+    operation = Operation.objects.filter(date_time=date_time)
+    ser = OperationSerializers(operation, many=True)
+    return Response(ser.data)
+
+@api_view(['GET'])
+def filter_operation_by_time(request):
+    start_time = request.GET.get('start_time')
+    end_time = request.GET.get('end_time')
+    if start_time and end_time:
+        filtered_operation = Operation.objects.filter(start_time__gte=start_time, end_time__lte=end_time)
+        for operation in filtered_operation:
+            print(operation)
+        ser = OperationSerializers(filtered_operation, many=True)
+        return Response(ser.data)
+    else:
+        return Response({"error": "Both start_time and end_time are required."}, status=400)
+
+
+@api_view(['GET'])
+def filter_operation_by_patient(request):
+    patient = request.GET.get('patient')
+    operation = Operation.objects.filter(patient=patient)
+    ser = OperationSerializers(operation, many=True)
+    return Response(ser.data)
+
+@api_view(['GET'])
+def filter_operation_by_room(request):
+    room = request.GET.get('room')
+    operation = Operation.objects.filter(room=room)
+    ser = OperationSerializers(operation, many=True)
+    return Response(ser.data)

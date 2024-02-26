@@ -6,13 +6,6 @@ import qrcode
 from io import BytesIO
 from django.core.files import File
 
-class Department(models.Model):
-    number = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.number
-
-
 class User(AbstractUser):
     avatar = models.ImageField(upload_to='foto/', verbose_name='Rasm')
     passport_seria = models.CharField(max_length=55, verbose_name='Passport seriasi')
@@ -140,22 +133,12 @@ class Cashflow(models.Model):
         return self.user
 
 
-class Equipment(models.Model):
-    name = models.CharField(max_length=55)
-    type = models.CharField(max_length=55)
-    number = models.IntegerField(default=0)
-    room = models.ManyToManyField(to='Room')
-
-    def __str__(self):
-        return self.name
-
 
 class Room(models.Model):
     name = models.CharField(max_length=55)
     deparment = models.ForeignKey(to='Department', on_delete=models.CASCADE)
     number = models.IntegerField(default=0)
     place = models.IntegerField(default=0)
-    equipment = models.ManyToManyField(to='Equipment')
     busy_empty = models.FloatField()
 
     def __str__(self):
@@ -207,18 +190,23 @@ class Patient(models.Model):
 
 
 class Department(models.Model):
-    number = models.IntegerField(default=0)
+    number = models.CharField(max_length=25)
 
     def __str__(self):
         return self.number
 
 
 class Operation(models.Model):
-    name = models.CharField(max_length=55)
-    doctor = models.ForeignKey(to='Employee', on_delete=models.CASCADE)
-    patient = models.ForeignKey(to='Patient', on_delete=models.CASCADE)
-    equipment = models.ForeignKey(to='Equipment', on_delete=models.CASCADE)
+    doctors = models.ManyToManyField(to='Employee', verbose_name='xodim')
+    date_time = models.DateField(verbose_name="boshlanadigan kun")
+    start_time = models.TimeField(verbose_name='aperatsi boshlanosh vaqti ')
+    end_time = models.TimeField(verbose_name='aperatsi tugash vaqti ')
+    patient = models.ForeignKey(to='Patient', verbose_name= 'bemor', on_delete=models.CASCADE)
+    room = models.ForeignKey(to='Room', on_delete=models.SET_NULL,  verbose_name='xona',null=True)
+    create_at = models.DateField(auto_now=True, verbose_name='yaratilgan b-vaqt')
 
+    def __str__(self):
+        return self.patient.fullname
 
 class Equipment(models.Model):
     name = models.CharField(max_length=55)
