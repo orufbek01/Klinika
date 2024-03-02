@@ -41,5 +41,5 @@ urlpatterns = [
 
     path('create-testimonial_patent/', CreateTestimonial_patient.as_view()),
     path('update-testimonial_patent/<int:pk>/', UpdateTestimonial_patient.as_view()),
-    path('delete-testimonial_patent/<int:pk>/', DeleteTestimonial_patient.as_view()),
+    path('delete-testimonial_patent/<int:pk>/', DeleteTestimonial_patient.as_view())
 ]
