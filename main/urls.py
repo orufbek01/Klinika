@@ -44,5 +44,5 @@ urlpatterns = [
     path('operation/by-date-time/', views.filter_operation_by_date_time),
     path('operation/by-time/', views.filter_operation_by_time),
     path('operation/by-patient/', views.filter_operation_by_patient),
-    path('operation/by-room/', views.filter_operation_by_room),
+    path('operation/by-room/', views.filter_operation_by_room)
 ]
