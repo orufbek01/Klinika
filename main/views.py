@@ -320,3 +320,31 @@ def filter_operation_by_room(request):
     operation = Operation.objects.filter(room=room)
     ser = OperationSerializers(operation, many=True)
     return Response(ser.data)
+
+
+@api_view(["GET"])
+def cashflow_api(request, slug):
+    cassa = Cashflow.objects.get(slug = 1)
+    ser = CashflowSerializer(cassa)
+    return Response(ser.data)
+
+
+@api_view(["GET"])
+def employee_api(request, slug):
+    employee = Employee.objects.get(slug = slug)
+    ser = EmployeeSerializer(employee, many=True)
+    return Response(ser.data)
+
+
+@api_view(["GET"])
+def patitent_api(request, slug):
+    patitent = Patient.objects.get(slug = slug)
+    ser = PatientSerializer(patitent)
+    return Response(ser.data)
+
+
+@api_view(["GET"])
+def attendance_api(request, slug):
+    attendance = Attendance.objects.get(slug = slug)
+    ser = AttendanceSerializer(attendance)
+    return Response(ser.data)
