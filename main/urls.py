@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Get_Cassa, Get_Attendance, Get_Patient, Get_Address, Get_Employee, Get_Cashflow,Get_Operation, Get_Testimonal_patient,Get_Department,Get_Room
+from .views import Get_Cassa, Get_Attendance, Get_Patient, Get_Address, Get_Employee, Get_Cashflow,Get_Operation, Get_Testimonal_patient,Get_Department,Get_Room, cashflow_api, attendance_api, employee_api, patitent_api
 from . import views
 
 urlpatterns = [
@@ -44,5 +44,9 @@ urlpatterns = [
     path('operation/by-date-time/', views.filter_operation_by_date_time),
     path('operation/by-time/', views.filter_operation_by_time),
     path('operation/by-patient/', views.filter_operation_by_patient),
-    path('operation/by-room/', views.filter_operation_by_room)
+    path('operation/by-room/', views.filter_operation_by_room),
+    path("cashflow_api/<slug:slug>/", cashflow_api),
+    path("employee_api/<slug:slug>/", employee_api),
+    path("patitent_api/<slug:slug>/", patitent_api),
+    path("attendance_api/<slug:slug>/", attendance_api),
 ]
